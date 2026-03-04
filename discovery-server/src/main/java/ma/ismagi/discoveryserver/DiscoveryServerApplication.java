@@ -5,9 +5,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 
 @SpringBootApplication
-@EnableEurekaServer // This turns the microservice into a Registry
+@EnableEurekaServer // Turn DiscoveryServer into a registry
 public class DiscoveryServerApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(DiscoveryServerApplication.class, args);
-    }
+
+  public static void main(String[] args) {
+    SpringApplication.run(DiscoveryServerApplication.class, args);
+  }
+
 }
