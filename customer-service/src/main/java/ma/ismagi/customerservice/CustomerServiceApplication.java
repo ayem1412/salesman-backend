@@ -1,4 +1,4 @@
-package ma.ismagi.orderservice;
+package ma.ismagi.customerservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,16 +7,16 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 /**
- * OrderServiceApplication
+ * CustomerServiceApplication
  */
 @EnableJpaAuditing
 @EnableFeignClients
 @SpringBootApplication
-@EnableDiscoveryClient // Make OrderService discoverable
-public class OrderServiceApplication {
+@EnableDiscoveryClient // Make CustomerService discoverable
+public class CustomerServiceApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(OrderServiceApplication.class, args);
+    SpringApplication.run(CustomerServiceApplication.class, args);
   }
 
 }

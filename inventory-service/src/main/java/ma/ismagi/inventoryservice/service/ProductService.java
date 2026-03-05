@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityNotFoundException;
-import lombok.NonNull;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import ma.ismagi.inventoryservice.dto.ProductRequestDto;
 import ma.ismagi.inventoryservice.dto.ProductResponseDto;
@@ -31,15 +31,34 @@ public class ProductService {
   }
 
   @Transactional(readOnly = true)
-  public ProductResponseDto getProductById(@NonNull UUID id) {
+  public ProductResponseDto getProductById(@NotNull UUID id) {
     Product product = productRepository.findById(id)
         .orElseThrow(() -> new EntityNotFoundException(String.format("Couldn't find product with the id: %s", id)));
 
     return mapToProductResponseDto(product);
   }
 
+  @Transactional(readOnly = true)
+  public boolean isProductInStock(@NotNull UUID productId, @NotNull Integer quantity) {
+    return productRepository.findById(productId)
+        .map(product -> product.getQuantity() >= quantity)
+        .orElse(false);
+  }
+
   @Transactional
-  public ProductResponseDto createProduct(@NonNull ProductRequestDto productRequestDto) {
+  public ProductResponseDto reduceProductQuantity(@NotNull UUID productId, @NotNull Integer quantity) {
+    Product product = productRepository.findById(productId)
+        .orElseThrow(() -> new EntityNotFoundException(String.format("Couldn't find product with the id: %s", productId)));
+
+    if (product.getQuantity() < quantity)
+      throw new RuntimeException(String.format("Insufficient stock for product: %s", productId));
+
+    product.setQuantity(product.getQuantity() - quantity);
+    return mapToProductResponseDto(product);
+  }
+
+  @Transactional
+  public ProductResponseDto createProduct(@NotNull ProductRequestDto productRequestDto) {
     return mapToProductResponseDto(productRepository.save(
           Product.builder()
               .name(productRequestDto.name())
@@ -49,7 +68,7 @@ public class ProductService {
               .build()));
   }
 
-  private ProductResponseDto mapToProductResponseDto(@NonNull Product product) {
+  private ProductResponseDto mapToProductResponseDto(@NotNull Product product) {
     return new ProductResponseDto(
       product.getId(),
       product.getName(),
