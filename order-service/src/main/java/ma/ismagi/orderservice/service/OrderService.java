@@ -17,7 +17,9 @@ import ma.ismagi.orderservice.entity.OrderLineItem;
 import ma.ismagi.orderservice.feignclient.CustomerClient;
 import ma.ismagi.orderservice.feignclient.InventoryClient;
 import ma.ismagi.orderservice.model.Status;
+import ma.ismagi.orderservice.repository.OrderLineItemRepository;
 import ma.ismagi.orderservice.repository.OrderRepository;
+import ma.ismagi.orderservice.util.InvoiceGenerator;
 
 /**
  * OrderService
@@ -29,6 +31,8 @@ public class OrderService {
   private final CustomerClient customerClient;
   private final InventoryClient inventoryClient;
   private final InvoiceService invoiceService;
+  private final OrderLineItemRepository orderLineItemRepository;
+  private final InvoiceGenerator invoiceGenerator;
 
   public String placeOrder(OrderRequestDto orderRequestDto) {
     validateSale(orderRequestDto);
@@ -71,6 +75,15 @@ public class OrderService {
         .map(item -> item.price().multiply(BigDecimal.valueOf(item.quantity())))
         .reduce(BigDecimal.ZERO, BigDecimal::add);
   }
+
+  public byte[] getInvoicePdf(UUID orderId) {
+        Order order = orderRepository.findById(orderId)
+            .orElseThrow(() -> new EntityNotFoundException(String.format("Sale not found with the id: %s", orderId)));
+
+        List<OrderLineItem> items = orderLineItemRepository.findByOrderId(orderId);
+
+        return invoiceGenerator.generateInvoicePdf(order, items);
+    }
 
   private Invoice generateInvoice(Order order) {
     return invoiceService.createInvoice(Invoice.builder()

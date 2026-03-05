@@ -17,10 +17,16 @@ spring:
               uri: lb://ORDER-SERVICE
               predicates:
                 - Path=/api/v1/orders/**
+              filters:
+                - AuthenticationFilter
             - id: customer-service
               uri: lb://CUSTOMER-SERVICE
               predicates:
                 - Path=/api/v1/customers/**
+            - id: identity-service
+              uri: lb://IDENTITY-SERVICE
+              predicates:
+                - Path=/api/v1/auth/**
 
 eureka:
   instance:
@@ -32,6 +38,9 @@ eureka:
 logging:
   level:
     web: DEBUG
+
+jwt:
+  secret: "543926515f788fdb799310d1d259702568f70d077c025ccb5e84cf4cbcf9ca17"
 
 management:
   endpoints:
