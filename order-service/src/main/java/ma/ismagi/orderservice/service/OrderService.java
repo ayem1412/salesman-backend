@@ -2,12 +2,16 @@ package ma.ismagi.orderservice.service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import ma.ismagi.orderservice.dto.OrderLineItemDto;
 import ma.ismagi.orderservice.dto.OrderRequestDto;
@@ -34,19 +38,43 @@ public class OrderService {
   private final OrderLineItemRepository orderLineItemRepository;
   private final InvoiceGenerator invoiceGenerator;
 
+  @Transactional(readOnly = true)
+  public List<Order> getCustomerHistory(UUID customerId) {
+    return orderRepository.findByCustomerIdOrderBySaleDateDesc(customerId);
+  }
+
+  @Transactional(readOnly = true)
+  public Map<String, BigDecimal> getSalesReport(int year, Integer month, LocalDateTime day) {
+    Map<String, BigDecimal> report = new HashMap<>();
+    
+    if (day != null)
+        report.put("daily", orderRepository.calculateDailyTotal(day));
+
+    if (month != null)
+        report.put("monthly", orderRepository.calculateMonthlyTotal(month, year));
+
+    report.put("yearly", orderRepository.calculateYearlyTotal(year));
+    return report;
+  }
+
+  @Transactional
   public String placeOrder(OrderRequestDto orderRequestDto) {
     validateSale(orderRequestDto);
 
     BigDecimal total = calculateTotal(orderRequestDto.items());
 
-    Order order = orderRepository.save(Order.builder()
+    Order order = Order.builder()
         .orderNumber(UUID.randomUUID().toString())
         .customerId(orderRequestDto.customerId())
         .saleDate(LocalDateTime.now())
         .status(Status.PENDING)
         .total(total)
-        .orderLineItems(mapItems(orderRequestDto.items()))
-        .build());
+        .build();
+
+    List<OrderLineItem> items = mapItems(orderRequestDto.items(), order);
+
+    order.setOrderLineItems(items);
+    orderRepository.save(order);
 
     generateInvoice(order);
 
@@ -57,6 +85,7 @@ public class OrderService {
     return String.format("Sale %s completed and invoice generated", order.getOrderNumber());
   }
 
+  @Transactional(readOnly = true)
   private void validateSale(OrderRequestDto orderRequestDto) {
     boolean customerExists = customerClient.checkCustomerExists(orderRequestDto.customerId());
     if (!customerExists)
@@ -76,6 +105,7 @@ public class OrderService {
         .reduce(BigDecimal.ZERO, BigDecimal::add);
   }
 
+  @Transactional(readOnly = true)
   public byte[] getInvoicePdf(UUID orderId) {
         Order order = orderRepository.findById(orderId)
             .orElseThrow(() -> new EntityNotFoundException(String.format("Sale not found with the id: %s", orderId)));
@@ -99,12 +129,13 @@ public class OrderService {
     return String.format("Invoice for sale: ", order.getOrderNumber()).getBytes();
   }
   
-  private List<OrderLineItem> mapItems(List<OrderLineItemDto> items) {
+  private List<OrderLineItem> mapItems(List<OrderLineItemDto> items, @NotNull Order order) {
     return items.stream()
         .map(item -> OrderLineItem.builder()
             .productId(item.productId())
             .quantity(item.quantity())
             .price(item.price())
+            .order(order)
             .build())
         .toList();
   }

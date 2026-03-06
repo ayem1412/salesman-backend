@@ -11,6 +11,10 @@ indent_style = tab
 indent_size = 4
 continuation_indent_size = 8
 
+[*.{sh,ps1}]
+indent_style = tab
+indent_size = 4
+
 [*.{java,yml}]
 indent_style = space
 indent_size = 2
