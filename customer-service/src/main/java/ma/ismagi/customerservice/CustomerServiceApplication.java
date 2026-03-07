@@ -6,9 +6,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-/**
- * CustomerServiceApplication
- */
+/** CustomerServiceApplication */
 @EnableJpaAuditing
 @EnableFeignClients
 @SpringBootApplication
@@ -18,5 +16,4 @@ public class CustomerServiceApplication {
   public static void main(String[] args) {
     SpringApplication.run(CustomerServiceApplication.class, args);
   }
-
 }

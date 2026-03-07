@@ -1,9 +1,5 @@
 package ma.ismagi.orderservice.entity;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.UUID;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -13,15 +9,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import ma.ismagi.orderservice.util.BaseEntity;
 import ma.ismagi.orderservice.model.Status;
+import ma.ismagi.orderservice.util.BaseEntity;
 
-/**
- * Invoice
- */
+/** Invoice */
 @Getter
 @Setter
 @Entity
@@ -44,6 +41,5 @@ public class Invoice extends BaseEntity {
   @Enumerated(EnumType.STRING)
   private Status paymentStatus;
 
-  @Lob
-  private byte[] pdfContent;
+  @Lob private byte[] pdfContent;
 }

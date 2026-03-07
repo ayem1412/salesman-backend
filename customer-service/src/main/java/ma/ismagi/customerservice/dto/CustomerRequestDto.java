@@ -2,11 +2,9 @@ package ma.ismagi.customerservice.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
-/**
- * CustomerRequestDto
- */
+/** CustomerRequestDto */
 public record CustomerRequestDto(
-  @NotBlank String name,
-  @NotBlank String address,
-  @NotBlank String email,
-  @NotBlank String phone) {}
+    @NotBlank String name,
+    @NotBlank String address,
+    @NotBlank String email,
+    @NotBlank String phone) {}

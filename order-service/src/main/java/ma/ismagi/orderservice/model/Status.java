@@ -1,6 +1,7 @@
 package ma.ismagi.orderservice.model;
 
 public enum Status {
+  NEW,
   PENDING,
-  PAID
+  COMPLETED,
 }

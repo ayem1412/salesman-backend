@@ -23,10 +23,14 @@ spring:
               uri: lb://CUSTOMER-SERVICE
               predicates:
                 - Path=/api/v1/customers/**
+              filters:
+                - AuthenticationFilter
             - id: identity-service
               uri: lb://IDENTITY-SERVICE
               predicates:
                 - Path=/api/v1/auth/**
+              filters:
+                - AuthenticationFilter
 
 eureka:
   instance:
