@@ -1,0 +1,134 @@
+{
+  "info": {
+    "_postman_id": "e83edf36-8f54-4e9c-a8dd-bcfd5934b2cd",
+    "name": "order",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "46189374",
+    "_collection_link": "https://go.postman.co/collection/46189374-e83edf36-8f54-4e9c-a8dd-bcfd5934b2cd?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "create",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiJlbG1haGRhZC5hbmFzeW91c3NlZjAwQHByb3Rvbi5tZSIsImlhdCI6MTc3Mjg2MTYyNSwiZXhwIjoxNzcyOTQ4MDI1fQ.625C8G54ziHZ88eNfnMRvA4fccZeJRWMtS_yIy2pMEo35yixPbAy5Lu1aHSaWc9U",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "",
+            "value": "",
+            "type": "text",
+            "disabled": true
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"customerId\": \"c36d876b-f36f-4e69-9f82-ee65af63f3ba\",\n    \"items\": [\n        {\n            \"productId\": \"7de713be-7fd0-41db-9418-03289f8f6f51\",\n            \"quantity\": 50,\n            \"price\": 100\n        }\n    ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BASE_URL_ORDER}}/create",
+          "host": [
+            "{{BASE_URL_ORDER}}"
+          ],
+          "path": [
+            "create"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "invoice",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiJlbG1haGRhZC5hbmFzeW91c3NlZjAwQHByb3Rvbi5tZSIsImlhdCI6MTc3Mjg2MTYyNSwiZXhwIjoxNzcyOTQ4MDI1fQ.625C8G54ziHZ88eNfnMRvA4fccZeJRWMtS_yIy2pMEo35yixPbAy5Lu1aHSaWc9U",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "",
+            "value": "",
+            "type": "text",
+            "disabled": true
+          }
+        ],
+        "url": {
+          "raw": "{{BASE_URL_ORDER}}/fb9e36de-80e0-4198-8128-a5998f1c19d7/invoice",
+          "host": [
+            "{{BASE_URL_ORDER}}"
+          ],
+          "path": [
+            "fb9e36de-80e0-4198-8128-a5998f1c19d7",
+            "invoice"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "reports",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiJlbG1haGRhZC5hbmFzeW91c3NlZjAwQHByb3Rvbi5tZSIsImlhdCI6MTc3Mjg2MTYyNSwiZXhwIjoxNzcyOTQ4MDI1fQ.625C8G54ziHZ88eNfnMRvA4fccZeJRWMtS_yIy2pMEo35yixPbAy5Lu1aHSaWc9U",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "",
+            "value": "",
+            "type": "text",
+            "disabled": true
+          }
+        ],
+        "url": {
+          "raw": "{{BASE_URL_ORDER}}/reports?year=2026&month=2",
+          "host": [
+            "{{BASE_URL_ORDER}}"
+          ],
+          "path": [
+            "reports"
+          ],
+          "query": [
+            {
+              "key": "year",
+              "value": "2026"
+            },
+            {
+              "key": "month",
+              "value": "2",
+              "type": "text"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

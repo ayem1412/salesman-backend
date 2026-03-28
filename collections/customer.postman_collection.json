@@ -1,0 +1,152 @@
+{
+  "info": {
+    "_postman_id": "8bb8893e-5edd-4f66-a734-e7a55567c70b",
+    "name": "customer",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "46189374",
+    "_collection_link": "https://go.postman.co/collection/46189374-8bb8893e-5edd-4f66-a734-e7a55567c70b?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "get-all",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiJlbG1haGRhZC5hbmFzeW91c3NlZjAwQHByb3Rvbi5tZSIsImlhdCI6MTc3Mjg2MTYyNSwiZXhwIjoxNzcyOTQ4MDI1fQ.625C8G54ziHZ88eNfnMRvA4fccZeJRWMtS_yIy2pMEo35yixPbAy5Lu1aHSaWc9U",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BASE_URL_CUSTOMER}}",
+          "host": [
+            "{{BASE_URL_CUSTOMER}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "search-filter",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BASE_URL_CUSTOMER}}?address=suite",
+          "host": [
+            "{{BASE_URL_CUSTOMER}}"
+          ],
+          "query": [
+            {
+              "key": "name",
+              "value": "joh",
+              "type": "text",
+              "disabled": true
+            },
+            {
+              "key": "email",
+              "value": "eli",
+              "type": "text",
+              "disabled": true
+            },
+            {
+              "key": "phone",
+              "value": "950",
+              "type": "text",
+              "disabled": true
+            },
+            {
+              "key": "address",
+              "value": "suite",
+              "type": "text"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get-by-id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BASE_URL_CUSTOMER}}/7d479e28-5af5-4897-ae42-fc7a988abb3f",
+          "host": [
+            "{{BASE_URL_CUSTOMER}}"
+          ],
+          "path": [
+            "7d479e28-5af5-4897-ae42-fc7a988abb3f"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "exists-by-id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BASE_URL_CUSTOMER}}/7d479e28-5af5-4897-ae42-fc7a988abb3f/exists",
+          "host": [
+            "{{BASE_URL_CUSTOMER}}"
+          ],
+          "path": [
+            "7d479e28-5af5-4897-ae42-fc7a988abb3f",
+            "exists"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "create",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"John Doe\",\n    \"address\": \"123 Main St, Rabat\",\n    \"email\": \"john.doe@email.com\",\n    \"phone\": \"+212600000000\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BASE_URL_CUSTOMER}}/create",
+          "host": [
+            "{{BASE_URL_CUSTOMER}}"
+          ],
+          "path": [
+            "create"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "delete",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{BASE_URL_CUSTOMER}}/7d479e28-5af5-4897-ae42-fc7a988abb3f",
+          "host": [
+            "{{BASE_URL_CUSTOMER}}"
+          ],
+          "path": [
+            "7d479e28-5af5-4897-ae42-fc7a988abb3f"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

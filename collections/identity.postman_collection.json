@@ -1,0 +1,37 @@
+{
+  "info": {
+    "_postman_id": "02efe0ac-062f-4531-8df1-6ffabc187d58",
+    "name": "identity",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "46189374",
+    "_collection_link": "https://go.postman.co/collection/46189374-02efe0ac-062f-4531-8df1-6ffabc187d58?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"elmahdad.anasyoussef00@proton.me\",\n    \"password\": \"123456\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BASE_URL_IDENTITY}}/login",
+          "host": [
+            "{{BASE_URL_IDENTITY}}"
+          ],
+          "path": [
+            "login"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
